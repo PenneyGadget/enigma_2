@@ -1,7 +1,7 @@
 
 class Key
 
-  attr_accessor :key  # => nil
+  attr_reader :key
 
   def initialize
     @key = generate_key
