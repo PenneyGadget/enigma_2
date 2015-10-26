@@ -1,6 +1,6 @@
 require 'minitest/autorun'
 require 'minitest/pride'
-require '../lib/key'
+require './lib/key'
 
 class KeyTest < Minitest::Test
 
@@ -16,9 +16,8 @@ class KeyTest < Minitest::Test
   end
 
   def test_the_rotations_are_properly_generated_from_a_key
-    skip ## why isn't this working?
-    key = "32879"
-
+    key = Key.new("32879")
+    
     assert_equal [32, 28, 87, 79], key.key_rotations
   end
 

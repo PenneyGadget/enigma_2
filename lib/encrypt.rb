@@ -5,10 +5,10 @@ class Encrypt
 
   attr_reader :key, :offset, :character_map
 
-  def initialize(message, key=nil, offset=nil)
+  def initialize(message, key = nil, date = nil)
     @character_map = ('a'..'z').to_a + ('0'..'9').to_a + [" ", ".", ","]
-    @key = Key.new.key_rotations
-    @offset = Offset.new.offset_rotations
+    @key = Key.new(key).key_rotations
+    @offset = Offset.new(date).offset_rotations
     @message = message
   end
 

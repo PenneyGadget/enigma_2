@@ -3,8 +3,8 @@ class Key
 
   attr_reader :key
 
-  def initialize
-    @key = generate_key
+  def initialize(digits = nil)
+    @key = digits || generate_key
   end
 
   def generate_key
@@ -17,10 +17,11 @@ class Key
   end
 
   def key_rotations
-    a = key[0].to_s + key[1].to_s
-    b = key[1].to_s + key[2].to_s
-    c = key[2].to_s + key[3].to_s
-    d = key[3].to_s + key[4].to_s
+    string_key = key.to_s
+    a = string_key[0..1]
+    b = string_key[1..2]
+    c = string_key[2..3]
+    d = string_key[3..4]
     rotations = [a, b, c, d].map do |r|
       r.to_i
     end

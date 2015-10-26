@@ -1,6 +1,8 @@
 require 'minitest/autorun'
 require 'minitest/pride'
-require '../lib/encrypt'
+require './lib/encrypt'
+require 'timecop'
+require 'date'
 
 class EncryptTest < Minitest::Test
 
@@ -29,17 +31,19 @@ class EncryptTest < Minitest::Test
   end
 
   def test_we_have_the_option_to_pass_in_our_own_key_and_the_date
-    e = Encrypt.new("Hello there good looking..end..", 12345, Date.today)
+    date = Date.parse("2015-10-01")
+    e = Encrypt.new("Hello there good looking..end..", 12345, date)
 
     assert e
-    assert_equal [12, 23, 34, 45], e.key #not working, still randomizes key every time
-    assert_equal [0, 2, 2, 5], e.offset #is this assertation valid? is it actually working/testing Date.today being passed in here??
+    assert_equal [12, 23, 34, 45], e.key
+    assert_equal [0, 2, 2, 5], e.offset
   end
 
   def test_the_proper_rotation_is_being_calculated
-    e = Encrypt.new("Hello", 12345, Date.today)
+    date = Date.parse("2015-10-01")
+    e = Encrypt.new("Hello", 12345, date)
 
-    assert_equal [12, 25, 36, 50], e.rotation #also not working due to key randomization
+    assert_equal [12, 25, 36, 50], e.rotation
   end
 
   def test_rotated_position_method_is_finding_correct_index_of_letters_on_character_map
@@ -49,9 +53,10 @@ class EncryptTest < Minitest::Test
   end
 
   def test_proper_rotations_for_encryption
-    e = Encrypt.new("Hello", 12345, Date.today)
+    date = Date.parse("2015-10-01")
+    e = Encrypt.new("Hello", 12345, date)
 
-    assert_equal [19, 29, 47, 61, 26], e.rotated_position #failing due to randomization
+    assert_equal [19, 29, 47, 61, 26], e.rotated_position
   end
 
   def test_proper_rotations_for_a_more_complicated_message

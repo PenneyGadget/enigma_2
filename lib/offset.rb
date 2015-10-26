@@ -1,18 +1,14 @@
 require 'date'
-require 'pry'
 
 class Offset
+  attr_reader :date
 
-  def initialize
-    @date = date
-  end
-
-  def date
-    Date.today.strftime("%d%m%y")
+  def initialize(input_date = nil)
+    @date = input_date || Date.today
   end
 
   def offset
-    (date.to_i ** 2).to_s[-4..-1]
+    (date.strftime("%d%m%y").to_i ** 2).to_s[-4..-1]
   end
 
   def offset_rotations
