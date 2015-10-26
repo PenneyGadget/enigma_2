@@ -60,8 +60,15 @@ class EncryptTest < Minitest::Test
   end
 
   def test_proper_rotations_for_a_more_complicated_message
-    skip
+    date = Date.parse("2015-10-01")
+    e = Encrypt.new("Well. Hi there 666. I was waiting for you.", 24680, date)
 
+    assert_equal [46, 52, 81, 96, 61, 84, 77,
+                  93, 60, 67, 77, 89, 41, 52,
+                  106, 117, 56, 80, 107, 121,
+                  32, 84, 92, 85, 42, 84, 92,
+                  85, 32, 67, 78, 98, 30, 84,
+                  75, 99, 41, 84, 94, 99, 44, 85], e.rotated_position
   end
 
   def test_a_message_is_encrypted

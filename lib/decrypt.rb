@@ -5,10 +5,10 @@ class Decrypt
 
   attr_reader :key, :offset, :character_map
 
-  def initialize(message, key, offset=nil)
+  def initialize(message, key = nil, date = nil)
     @character_map = ('a'..'z').to_a + ('0'..'9').to_a + [" ", ".", ","]
-    @key = Key.new.key_rotations
-    @offset = Offset.new.offset_rotations
+    @key = Key.new(key).key_rotations
+    @offset = Offset.new(date).offset_rotations
     @message = message
   end
 
@@ -24,19 +24,19 @@ class Decrypt
     position = @message.downcase.chars.to_a.map { |letter| @character_map.index(letter) }
   end
 
-  # def rotated_position
-  #   position = []
-  #   counter = 0
-  #   message_position.each do |num|
-  #     position << num + rotation[counter]
-  #     counter = (counter + 1) % rotation.length
-  #   end
-  #   position
-  # end
+  def rotated_position
+    position = []
+    counter = 0
+    message_position.each do |num|
+      position << num - rotation[counter]
+      counter = (counter + 1) % rotation.length
+    end
+    position
+  end
 
+  def decrypt
+    location = rotated_position.map { |num| num % 39 }
+    location.map { |num| @character_map.values_at(num) }.join
+  end
 
 end
-
-d = Decrypt.new("t3iw0w8jq,ajk", 12345)
-d.rotation
-d.message_position
