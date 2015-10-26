@@ -28,7 +28,7 @@ class DecryptTest < Minitest::Test
     assert Decrypt.new("t3iw0w8jq,ajk", 12345)
   end
 
-  def test_we_can_pass_in_the_date_if_we_want_and_it_works_the_same
+  def test_we_can_pass_in_our_own_date_if_we_want_and_it_works_the_same
     assert Decrypt.new("t3iw0w8jq,ajk", 12345, Date.today)
   end
 
