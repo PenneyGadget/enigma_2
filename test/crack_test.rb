@@ -25,7 +25,10 @@ class CrackTest < Minitest::Test
   end
 
   def test_remainder_of_end_characters_to_determine_rotations
+    c = Crack.new("t3iw0w8jq,ajk")
 
+    assert_equal 1, c.message.length % 4
+    assert_equal [1, 2, 3, 0], c.end_position
   end
 
   def test_we_can_find_the_difference_between_the_encrypted_position_and_the_true_position

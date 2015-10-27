@@ -16,9 +16,7 @@ class Offset
     b = offset[1]
     c = offset[2]
     d = offset[3]
-    rotations = [a, b, c, d].map do |r|
-      r.to_i
-    end
+    rotations = [a, b, c, d].map { |r| r.to_i }
   end
 
 end
