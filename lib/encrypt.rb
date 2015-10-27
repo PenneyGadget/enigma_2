@@ -6,7 +6,7 @@ class Encrypt
   attr_reader :key, :offset, :character_map
 
   def initialize(message, key = nil, date = nil)
-    @character_map = ('a'..'z').to_a + ('0'..'9').to_a + [" ", ".", ","]
+    @character_map = (' '..'z').to_a
     @key = Key.new(key).key_rotations
     @offset = Offset.new(date).offset_rotations
     @message = message
@@ -21,7 +21,7 @@ class Encrypt
   end
 
   def message_position
-    position = @message.downcase.chars.to_a.map { |letter| @character_map.index(letter) }
+    position = @message.chars.to_a.map { |letter| @character_map.index(letter) }
   end
 
   def rotated_position
@@ -35,7 +35,7 @@ class Encrypt
   end
 
   def encrypt
-    location = rotated_position.map { |num| num % 39 }
+    location = rotated_position.map { |num| num % 91 }
     location.map { |num| @character_map.values_at(num) }.join
   end
 
