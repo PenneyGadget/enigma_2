@@ -1,5 +1,3 @@
-# require_relative 'key'
-# require_relative 'offset'
 require_relative 'encrypt'
 require_relative 'decrypt'
 require_relative 'crack'
