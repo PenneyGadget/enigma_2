@@ -7,21 +7,23 @@ class DecryptTest < Minitest::Test
   def test_character_map_exists
     d = Decrypt.new("Bonjour")
 
-    assert_equal ('a'..'z').to_a + ('0'..'9').to_a + [" ", ".", ","], d.character_map
+    assert_equal (' '..'z').to_a, d.character_map
   end
 
   def test_character_map_is_39_characters_long
     d = Decrypt.new("Hola")
 
-    assert_equal 39, d.character_map.length
+    assert_equal 91, d.character_map.length
   end
 
   def test_character_and_index_position_on_character_map_are_correct
-    d = Decrypt.new("Hmmmpf")
+    d = Decrypt.new("Hmmmpf!")
 
-    assert_equal "h", d.character_map[7]
-    assert_equal "9", d.character_map[35]
-    assert_equal " ", d.character_map[36]
+    assert_equal "'", d.character_map[7]
+    assert_equal "C", d.character_map[35]
+    assert_equal "D", d.character_map[36]
+    assert_equal "z", d.character_map[90]
+    assert_equal " ", d.character_map[0]
   end
 
   def test_decrypt_class_exists_and_that_it_takes_a_message_and_key
@@ -33,7 +35,7 @@ class DecryptTest < Minitest::Test
   end
 
   def test_the_proper_rotation_is_being_calculated
-    d = Decrypt.new("Hello", 12345, Date.today)
+    d = Decrypt.new("BLARG!!", 12345, Date.today)
 
     assert_equal [12, 25, 36, 50], d.rotation
   end
@@ -41,32 +43,32 @@ class DecryptTest < Minitest::Test
   def test_rotated_position_method_is_finding_correct_index_of_letters_on_character_map
     d = Decrypt.new("Hello ..end..")
 
-    assert_equal [7, 4, 11, 11, 14, 36, 37, 37, 4, 13, 3, 37, 37], d.message_position
+    assert_equal [40, 69, 76, 76, 79, 0, 14, 14, 69, 78, 68, 14, 14], d.message_position
   end
 
   def test_proper_rotations_for_decryption
     date = Date.parse("2015-10-01")
     d = Decrypt.new("t3iw0", 12345, date)
 
-    assert_equal [7, 4, -28, -28, 14], d.rotated_position
+    assert_equal [72, -6, 37, 37, 4], d.rotated_position
   end
 
   def test_proper_rotations_for_a_more_complicated_message
     date = Date.parse("2015-10-01")
-    d = Decrypt.new("hndswg,pv2,lcn2arc3e6gohdgoh62au4g vcgqvfh", 24680, date)
+    d = Decrypt.new("l=Tm8>^uk$f],DWv8!Zi(PLn8IS_8VkyXQn%UP^n2;Q99", 24680, date)
 
-    assert_equal [-17, -35, -67, -67, -2, -42, -32,
-                  -70, -3, -20, -32, -74, -22, -35,
-                  -42, -85, -7, -46, -41, -81, 8,
-                  -42, -56, -78, -21, -42, -56, -78,
-                  8, -20, -70, -65, 6, -42, -34, -64,
-                   -22, -42, -54, -64, -19, -41], d.rotated_position
+    assert_equal [52, -19, -18, -8, 0, -18,
+                  -8, 0, 51, -44, 0, -24, -12,
+                  -12, -15, 1, 0, -47, -12,
+                  -12, -16, 0, -26, -7, 0, -7,
+                  -19, -22, 0, 6, 5, 4, 32, 1,
+                  8, -80, 29, 0, -8, -7, -6, -21, -21, -60, 1], d.rotated_position
   end
 
   def test_a_message_is_decrypted
-    d = Decrypt.new("t3iw0w8jq,ajk", 12345, Date.today)
+    d = Decrypt.new("c&s8mZ*RZ#5Cu#ES", 12345, Date.today)
 
-    assert_equal "hello ..end..", d.decrypt
+    assert_equal "WhOaaAa Nellie!!", d.decrypt
   end
 
 end
