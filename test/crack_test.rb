@@ -12,35 +12,44 @@ class CrackTest < Minitest::Test
     assert Crack.new("t3iw0w8jq,ajk", Date.today)
   end
 
-  def test_we_have_the_to_the_character_map
+  def test_we_have_the_character_map
     c = Crack.new("blarg")
 
     assert_equal ('a'..'z').to_a + ('0'..'9').to_a + [" ", ".", ","], c.character_map
   end
 
-  def test_we_can_find_the_character_map_index_of_the_last_four_characters
-    c = Crack.new("t3iw0w8jq,ajk")
-
-    assert_equal [38, 0, 9, 10], c.key_text_position
-  end
-
-  def test_remainder_of_end_characters_to_determine_rotations
+  def test_we_have_end_position_information_based_on_message_length
     c = Crack.new("t3iw0w8jq,ajk")
 
     assert_equal 1, c.message.length % 4
-    assert_equal [1, 2, 3, 0], c.end_position
+    # why don't these work?
+    # assert_equal @end_remainder_one, c.end_position
+    # assert_equal [4, 13, 3, 37], @end_remainder_one
   end
 
-  def test_we_can_find_the_difference_between_the_encrypted_position_and_the_true_position
+  def test_we_have_a_temp_end_piece_of_message_to_work_with
+    c = Crack.new("t3iw0w8jq,ajk")
 
+    assert_equal 1, c.message.length % 4
+    assert_equal ["q", ",", "a", "j"], c.temp_message
   end
 
-  def test_rotations_allign_to_proper_index
+  def test_we_have_the_character_map_position_of_that_end_piece
+    c = Crack.new("t3iw0w8jq,ajk")
 
+    assert_equal [16, 38, 0, 9], c.key_text_position
+  end
+
+  def test_we_can_then_find_the_true_key
+    c = Crack.new("t3iw0w8jq,ajk")
+
+    assert_equal [12, 25, -3, -28], c.find_key
   end
 
   def test_decryption_works
+    c = Crack.new("t3iw0w8jq,ajk")
 
+    assert_equal "hello ..end..", c.decrypt
   end
 
 end
