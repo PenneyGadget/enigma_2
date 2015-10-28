@@ -21,7 +21,7 @@ class Decrypt
   end
 
   def message_position
-    position = @message.chars.to_a.map { |letter| @character_map.index(letter) }
+    @message.chars.to_a.map { |letter| @character_map.index(letter) }
   end
 
   def rotated_position

@@ -22,7 +22,7 @@ class Key
     b = string_key[1..2]
     c = string_key[2..3]
     d = string_key[3..4]
-    rotations = [a, b, c, d].map { |r| r.to_i }
+    [a, b, c, d].map { |r| r.to_i }
   end
 
 end

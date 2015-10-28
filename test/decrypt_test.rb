@@ -43,7 +43,8 @@ class DecryptTest < Minitest::Test
   def test_rotated_position_method_is_finding_correct_index_of_letters_on_character_map
     d = Decrypt.new("Hello ..end..")
 
-    assert_equal [40, 69, 76, 76, 79, 0, 14, 14, 69, 78, 68, 14, 14], d.message_position
+    assert_equal [40, 69, 76, 76, 79, 0,
+                  14, 14, 69, 78, 68, 14, 14], d.message_position
   end
 
   def test_proper_rotations_for_decryption

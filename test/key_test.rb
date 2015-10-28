@@ -17,9 +17,8 @@ class KeyTest < Minitest::Test
 
   def test_the_rotations_are_properly_generated_from_a_key
     key = Key.new("32879")
-    
+
     assert_equal [32, 28, 87, 79], key.key_rotations
   end
-
 
 end

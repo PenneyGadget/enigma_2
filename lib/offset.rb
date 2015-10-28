@@ -1,6 +1,7 @@
 require 'date'
 
 class Offset
+  
   attr_reader :date
 
   def initialize(input_date = nil)
@@ -16,7 +17,7 @@ class Offset
     b = offset[1]
     c = offset[2]
     d = offset[3]
-    rotations = [a, b, c, d].map { |r| r.to_i }
+    [a, b, c, d].map { |r| r.to_i }
   end
 
 end

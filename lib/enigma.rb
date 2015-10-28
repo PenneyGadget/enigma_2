@@ -1,11 +1,11 @@
-require_relative 'encrypt'  # => true
-require_relative 'decrypt'  # => true
-require_relative 'crack'    # => true
+require_relative 'encrypt'
+require_relative 'decrypt'
+require_relative 'crack'
 
 class Enigma
 
   def encrypt(message, key = nil, date = nil)
-    Encrypt.new(message, key, date).encrypt    # => "ufE[3VHgFmPtSVCOSz"
+    Encrypt.new(message, key, date).encrypt
   end
 
   def decrypt(message, key, date = nil)
@@ -17,6 +17,3 @@ class Enigma
   end
 
 end
-
-e = Enigma.new                          # => #<Enigma:0x007fd540941200>
-e.encrypt("Puppies!!! ..end..", 37465)  # => "ufE[3VHgFmPtSVCOSz"
