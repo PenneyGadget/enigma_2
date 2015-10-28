@@ -4,16 +4,16 @@ require_relative 'decrypt'
 
 class Crack
 
-  attr_reader :offset, :character_map, :message
+  attr_reader :offset, :character_map, :message, :end_remainder_one
 
   def initialize(message, date = nil)
-    @character_map = ('a'..'z').to_a + ('0'..'9').to_a + [" ", ".", ","]
+    @character_map = (' '..'z').to_a
     @offset = Offset.new(date).offset_rotations
     @message = message
-    @end_remainder_zero = [13, 3, 37, 37]
-    @end_remainder_one = [4, 13, 3, 37]
-    @end_remainder_two = [37, 4, 13, 3]
-    @end_remainder_three = [37, 37, 4, 13]
+    @end_remainder_zero = [78, 68, 14, 14]
+    @end_remainder_one = [69, 78, 68, 14]
+    @end_remainder_two = [14, 69, 78, 68]
+    @end_remainder_three = [14, 14, 69, 78]
   end
 
   def end_position
@@ -54,7 +54,7 @@ class Crack
   end
 
   def full_message_position
-    position = @message.downcase.chars.to_a.map { |letter| @character_map.index(letter) }
+    position = @message.chars.to_a.map { |letter| @character_map.index(letter) }
   end
 
   def rotated_position
@@ -68,7 +68,7 @@ class Crack
   end
 
   def decrypt
-    location = rotated_position.map { |num| num % 39 }
+    location = rotated_position.map { |num| num % 91 }
     location.map { |num| @character_map.values_at(num) }.join
   end
 
