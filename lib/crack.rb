@@ -4,10 +4,12 @@ require_relative 'decrypt'
 
 class Crack
 
-  attr_reader :offset, :character_map, :message, :end_remainder_one
+  attr_reader :key, :offset, :character_map, :message, :end_remainder_one
 
   def initialize(message, date = nil)
     @character_map = (' '..'z').to_a
+    @key = Key.new(key).key_rotations
+    @original_key = key
     @offset = Offset.new(date).offset_rotations
     @message = message
     @end_remainder_zero = [78, 68, 14, 14]
@@ -51,6 +53,7 @@ class Crack
     true_key << (key_text_position[1] - end_position[1])
     true_key << (key_text_position[2] - end_position[2])
     true_key << (key_text_position[3] - end_position[3])
+    true_key.map { |num| num % 91 }
   end
 
   def full_message_position
@@ -72,4 +75,22 @@ class Crack
     location.map { |num| @character_map.values_at(num) }.join
   end
 
+  def reformat_key
+    first_two = key.shift
+    proper_key = first_two.to_s.chars
+    key.each do |num|
+      proper_key << num.to_s[-1]
+    end
+    proper_key = proper_key.join.to_i
+  end
+
+end
+
+if __FILE__ == $PROGRAM_NAME
+  message = File.read(ARGV[0])
+  c = Crack.new(message, Date.today)
+  cracked = c.decrypt
+  f = File.new(ARGV[1], "w")
+  f.write(cracked)
+  puts "Created '#{ARGV[1]}' with the cracked key #{c.reformat_key} and date #{ARGV[2]}"
 end

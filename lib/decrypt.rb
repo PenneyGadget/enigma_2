@@ -44,7 +44,7 @@ end
 
 if __FILE__ == $PROGRAM_NAME
   message = File.read(ARGV[0])
-  d = Decrypt.new(message, 82648)
+  d = Decrypt.new(message, ARGV[2])
   decrypted = d.decrypt
   f = File.new(ARGV[1], "w")
   f.write(decrypted)

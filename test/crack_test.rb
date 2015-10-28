@@ -41,13 +41,15 @@ class CrackTest < Minitest::Test
   def test_we_can_then_find_the_true_key
     c = Crack.new("Xi:Xp]0u8S':8_,8UZuN7S#8NM)OOi:XX")
 
-    assert_equal [-22, -5, -42, 42], c.find_key
+    assert_equal [69, 86, 49, 42], c.find_key
   end
 
   def test_decryption_works
     c = Crack.new("6CN\\N7Dyq-;>q9@<34.Rp-7<,'=S-CN\\69R`q,-`:")
+    c2 = Crack.new ("T#49 9QVq,,V:")
 
     assert_equal "****By George we've done it!!**** ..end..", c.decrypt
+    assert_equal "Hello ..end..", c2.decrypt
   end
 
 end
