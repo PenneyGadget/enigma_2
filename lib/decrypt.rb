@@ -8,6 +8,7 @@ class Decrypt
   def initialize(message, key = nil, date = nil)
     @character_map = (' '..'z').to_a
     @key = Key.new(key).key_rotations
+    @original_key = key
     @offset = Offset.new(date).offset_rotations
     @message = message
   end
@@ -39,4 +40,13 @@ class Decrypt
     location.map { |num| @character_map.values_at(num) }.join
   end
 
+end
+
+if __FILE__ == $PROGRAM_NAME
+  message = File.read(ARGV[0])
+  d = Decrypt.new(message, 82648)
+  decrypted = d.decrypt
+  f = File.new(ARGV[1], "w")
+  f.write(decrypted)
+  puts "Created '#{ARGV[1]}' with the key #{ARGV[2]} and date #{ARGV[3]}"
 end

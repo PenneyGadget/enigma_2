@@ -23,7 +23,7 @@ class Encrypt
   end
 
   def message_position
-    @message.delete!("\n")
+    @message.gsub!("\n", " ")
     @message.chars.to_a.map { |letter| @character_map.index(letter) }
   end
 
@@ -50,5 +50,5 @@ if __FILE__ == $PROGRAM_NAME
   encrypted = e.encrypt
   f = File.new(ARGV[1], "w")
   f.write(encrypted)
-  puts "Created '#{ARGV[1]}' with the key #{e.original_key} and date #{Date.today}"
+  puts "Created '#{ARGV[1]}' with the key #{e.original_key} and date #{Date.today.strftime("%d%m%y")}"
 end
