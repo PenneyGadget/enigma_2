@@ -77,7 +77,7 @@ class EnigmaTest < Minitest::Test
     assert_equal "Puppies!!! ..end..", e.crack(encrypted, date)
   end
 
-  def test_we_can_crack_a_message_with_newlines
+  def test_we_can_crack_a_message_with_a_newline
     e = Enigma.new
     encrypted = "@1`dgGh`]>Ysq;i@gCvks5hs_;]f_f\"&]:X&&"
 
