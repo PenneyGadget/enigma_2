@@ -14,11 +14,8 @@ class Encrypt
   end
 
   def rotation
-    a = key[0] + offset[0]
-    b = key[1] + offset[1]
-    c = key[2] + offset[2]
-    d = key[3] + offset[3]
-    [a, b, c, d]
+    pairs = key.zip(offset)
+    pairs.map { |p| p.reduce(:+) }
   end
 
   def message_position
@@ -50,13 +47,4 @@ class Encrypt
     proper_key = proper_key.join.to_i
   end
 
-end
-
-if __FILE__ == $PROGRAM_NAME
-  message = File.read(ARGV[0])
-  e = Encrypt.new(message)
-  encrypted = e.encrypt
-  f = File.new(ARGV[1], "w")
-  f.write(encrypted)
-  puts "Created '#{ARGV[1]}' with the key #{e.reformat_key} and date #{Date.today.strftime("%d%m%y")}"
 end

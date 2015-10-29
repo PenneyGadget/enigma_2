@@ -34,7 +34,7 @@ class EncryptTest < Minitest::Test
 
   def test_we_have_the_option_to_pass_in_our_own_key_and_the_date
     date = Date.parse("2015-10-01")
-    e = Encrypt.new("Hello there good looking [..end..]", 12345, date)
+    e = Encrypt.new("Hello there good looking ..end..", 12345, date)
 
     assert e
     assert_equal [12, 23, 34, 45], e.key
@@ -49,11 +49,11 @@ class EncryptTest < Minitest::Test
   end
 
   def test_rotated_position_method_is_finding_correct_index_of_letters_on_character_map
-    e = Encrypt.new("Whazzup? (..end..)")
+    e = Encrypt.new("Whazzup? ..end..")
 
-    assert_equal [55, 72, 65, 90, 90, 85,
-                  80, 31, 0, 8, 14, 14,
-                  69, 78, 68, 14, 14, 9], e.message_position
+    assert_equal [55, 72, 65, 90, 90,
+                  85, 80, 31, 0, 14,
+                  14, 69, 78, 68, 14, 14], e.message_position
   end
 
   def test_proper_rotations_for_encryption
@@ -83,6 +83,13 @@ class EncryptTest < Minitest::Test
     e = Encrypt.new("Well F&*#*@!", 12345, Date.today)
 
     assert_equal "c#5C,_J\\/CdS", e.encrypt
+  end
+
+  def test_we_can_reformat_the_key_for_file_io_output_message
+    e = Encrypt.new("Hey", 12345)
+    rotation = [12, 23, 34, 45]
+
+    assert_equal 12345, e.reformat_key
   end
 
 end

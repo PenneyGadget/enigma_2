@@ -1,7 +1,7 @@
 require 'date'
 
 class Offset
-  
+
   attr_reader :date
 
   def initialize(input_date = nil)
